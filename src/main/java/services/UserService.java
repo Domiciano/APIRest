@@ -4,10 +4,7 @@ import entity.User;
 import model.Message;
 import provider.UserProvider;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -37,6 +34,26 @@ public class UserService {
             return Response
                     .status(500)
                     .entity(m)
+                    .build();
+        }
+    }
+
+    @POST
+    @Path("create")
+    @Produces("application/json")
+    @Consumes("application/json")
+    public Response createUser(User user){
+        try {
+            UserProvider provider = new UserProvider();
+            provider.create(user);
+            return Response
+                    .status(200)
+                    .entity(new Message("info", "Operación exitosa"))
+                    .build();
+        }catch (Exception exception){
+            return Response
+                    .status(200)
+                    .entity(new Message("Exception", exception.getMessage()))
                     .build();
         }
     }

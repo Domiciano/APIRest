@@ -31,4 +31,17 @@ public class UserProvider {
         return  users;
     }
 
+    public void create(User user) throws SQLException, ClassNotFoundException {
+        DbConn conn = new DbConn();
+        String sql = "INSERT INTO users(username, name, natId, age, pass) " +
+                "VALUES ('$USERNAME','$NAME','$NATID', $AGE,'$PASS')";
+        sql = sql.replace("$USERNAME", user.getUsername());
+        sql = sql.replace("$NAME", user.getName());
+        sql = sql.replace("$NATID", user.getNatId());
+        sql = sql.replace("$AGE", ""+user.getAge());
+        sql = sql.replace("$PASS", user.getPass());
+        System.out.println(sql);
+        conn.runQuery(sql);
+        conn.close();
+    }
 }
