@@ -27,7 +27,10 @@ class PersonComponent{
 
     action(event){
         event.preventDefault();
-        alert(this.person.name);
+        let json = JSON.stringify(this.person);
+        console.log(json);
+        window.localStorage.setItem('user', json);
+        window.location.href = "detail.html";
     }
 
 }

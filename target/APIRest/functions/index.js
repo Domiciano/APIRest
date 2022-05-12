@@ -56,21 +56,6 @@ const getPokemon = async (num)=>{
     let component = new PersonComponent(person);
 
     component.render(personContainer);
-
-
-    /*
-    fetch(url, {method:'GET'}).then(
-        response=>{
-            response.json().then(
-                obj => {
-                    console.log(obj);
-                }
-            );
-        }
-    );
-    console.log("Alfa");
-    */
-
 }
 
 const download = async ()=>{
@@ -103,6 +88,10 @@ const getUsersAPI = async ()=>{
 
 getUsersAPI();
 
+let user = window.localStorage.getItem('user');
+console.log(user);
 
+if(user != null){
+    window.location.href = 'detail.html';
+}
 
-console.log("Alfa");
