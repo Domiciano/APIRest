@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<input id="message" type="text">
+<button id="send">Enviar</button>
+<div id="messages"></div>
+</body>
+
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.8.1/firebase-app.js";
+    const firebaseConfig = {
+        apiKey: "AIzaSyDfdB3B9OHUBnttSUugCkdpPwoX3juXixk",
+        authDomain: "facelogprueba.firebaseapp.com",
+        databaseURL: "https://facelogprueba.firebaseio.com",
+        projectId: "facelogprueba",
+        storageBucket: "facelogprueba.appspot.com",
+        messagingSenderId: "612300733454",
+        appId: "1:612300733454:web:e6aef92a829829aaf9505f"
+    };
+    const app = initializeApp(firebaseConfig);
+</script>
+
+<script type="module">
+    import { getDatabase, ref, set, push, onValue  } from "https://www.gstatic.com/firebasejs/9.8.1/firebase-database.js";
+
+
+
+
+
+
+
+
+    const message = document.getElementById('message');
+    const send = document.getElementById('send');
+    const messages = document.getElementById('messages');
+
+    const ws = new WebSocket('ws://localhost:8080/APIRest/ws');
+    const db = getDatabase();
+
+    ws.onopen = ()=>{
+        console.log("Conectado!");
+    };
+    ws.onmessage = (event)=>{
+        console.log(event.data);
+        //messages.innerHTML += `<div>${event.data}</div>`;
+    }
+
+    send.addEventListener('click',(event)=>{
+        let msg = message.value;
+        ws.send(msg);
+
+
+
+        let dbCol = ref(db, 'chats/prograred');
+        let key = push(dbCol).key;
+        let dbRef = ref(db, `chats/prograred/${key}`);
+        set(dbRef, {message:msg});
+
+    });
+
+    //Escribir listener de db
+    let dbCol = ref(db, 'chats/prograred');
+    onValue(dbCol, (snapshot) => {
+        let data = snapshot.val();
+        messages.innerHTML = "";
+        for(let key in data){
+            messages.innerHTML += `<div>${data[key].message}</div>`;
+        }
+    });
+
+</script>
+</html>

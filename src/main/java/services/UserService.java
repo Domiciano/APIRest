@@ -21,21 +21,34 @@ public class UserService {
             ArrayList<User> users = provider.getAllUsers(page);
             return Response
                     .status(200)
+                    .header("Access-Control-Allow-Origin", "*")
                     .entity(users)
                     .build();
         }catch (SQLException ex){
             Message m = new Message("SQL Exception",ex.getMessage());
             return Response
                     .status(500)
+                    .header("Access-Control-Allow-Origin", "*")
                     .entity(m)
                     .build();
         }catch (ClassNotFoundException ex){
             Message m = new Message("Class not found Exception",ex.getMessage());
             return Response
                     .status(500)
+                    .header("Access-Control-Allow-Origin", "*")
                     .entity(m)
                     .build();
         }
+    }
+
+    @OPTIONS
+    @Path("create")
+    public Response createUserOptions(){
+        return Response
+                .status(200)
+                .header("Access-Control-Allow-Origin", "*")
+                .header("Access-Control-Allow-Headers", "*")
+                .build();
     }
 
     @POST
@@ -48,11 +61,13 @@ public class UserService {
             provider.create(user);
             return Response
                     .status(200)
+                    .header("Access-Control-Allow-Origin", "*")
                     .entity(new Message("info", "Operación exitosa"))
                     .build();
         }catch (Exception exception){
             return Response
                     .status(200)
+                    .header("Access-Control-Allow-Origin", "*")
                     .entity(new Message("Exception", exception.getMessage()))
                     .build();
         }

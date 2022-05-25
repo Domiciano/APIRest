@@ -1,3 +1,8 @@
+import Person from './Person.js ';
+import PersonComponent from './PersonComponent.js';
+
+
+
 const personNameInput = document.getElementById('personNameInput');
 const personPositionInput = document.getElementById('personPositionInput');
 const regBtn = document.getElementById('regBtn');

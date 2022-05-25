@@ -1,4 +1,4 @@
-class PersonComponent{
+export default class PersonComponent{
 
 
     //State

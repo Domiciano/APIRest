@@ -1,4 +1,4 @@
-class Person{
+export default class Person{
 
     constructor(id, name, position){
         this.id = id;
